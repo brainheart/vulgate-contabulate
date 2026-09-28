@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sources · Latin Vulgate Contabulate</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>main { max-width: 58rem; margin: auto; } h2 { color: var(--burgundy); margin-top: 2rem; } p, li { line-height: 1.55; } code { overflow-wrap: anywhere; }</style>
+</head>
+<body><main>
+  <p><a href="./">← Latin Vulgate explorer</a></p>
+  <h1>Edition and sources</h1>
+  <h2>The Latin text</h2>
+  <p>This explorer follows the Clementine Vulgate (<i lang="la">Biblia Sacra Vulgatæ Editionis</i>, 1592) in the transcription of the <a href="https://vulsearch.sourceforge.net/html/">Clementine Vulgate Project</a> (Michael Tweedale and collaborators, distributed with VulSearch). The text is in the public domain. The file used is <code>lat-clementine.usfx.xml</code> from <a href="https://github.com/seven1m/open-bibles">seven1m/open-bibles</a>, pinned to commit <code>e310b178189e30443c44f2338022aab73546b274</code> and checked by SHA-256 on every build.</p>
+  <p>Spelling is the edition's own: <i lang="la">æ</i> and <i lang="la">œ</i> ligatures, consonantal <i lang="la">j</i> (<i lang="la">cujus</i>, <i lang="la">Jesus</i>), and diaereses (<i lang="la">Israël</i>, <i lang="la">Joël</i>). The only changes are Unicode NFC normalization and closing up the French-style spaces the transcription prints before <code>: ; ? !</code>.</p>
+  <h2>Books, order, and numbering</h2>
+  <p>All 73 books in the source appear in the Clementine order, under the Latin titles printed in the source: the four books of Kings (<i lang="la">Regum I–IV</i>) and two of Chronicles (<i lang="la">Paralipomenon I–II</i>), <i lang="la">Esdræ</i> and <i lang="la">Nehemiæ</i>, then Tobit, Judith, and Esther; Wisdom and Ecclesiasticus after the Song of Songs; Baruch (with the Letter of Jeremiah as chapter 6) after Lamentations; and 1–2 Maccabees at the end of the Old Testament.</p>
+  <p>Chapter and verse numbers are the Vulgate's, with no remapping to the KJV or the Hebrew. Psalms follow the Greek and Latin count, so Psalm 22 is <i lang="la">Dominus regit me</i> and Psalm 50 is <i lang="la">Miserere</i>. Psalm titles are verse 1. Esther runs to chapter 16 with the Greek additions (10:4–16:24), Daniel 3 has 100 verses, and Susanna and Bel are Daniel 13 and 14.</p>
+  <p>The transcription attaches the unnumbered prologues of Ecclesiasticus and Lamentations to verse 1 behind a “Prologus” marker. Each is shown as its own row labelled <code>prol.</code> before verse 1, so that 1:1 is the verse the edition numbers 1:1.</p>
+  <p>The appendix of the Clementine edition (Prayer of Manasseh, 3 and 4 Esdras) is not in the source file and is not included.</p>
+  <h2>Search and counting</h2>
+  <p>Words are runs of letters, split at spaces, punctuation, and hyphens (<i lang="la">Beth-horon</i> is two words). Search ignores capitalization but not spelling: <a href="./?q=c%C3%A6lum&amp;gran=line" lang="la">cælum</a> finds the edition's form, while <i lang="la">caelum</i> finds nothing; a regex such as <code>c(ae|æ)lum</code> covers both. Sentences end at <code>. ! ?</code>; colons and semicolons, which the edition uses heavily, are treated as clause breaks.</p>
+  <p>No commentary counts are attached: the historical commentary used by the KJV and Luther instances is keyed to KJV numbering and has not been mapped to the Vulgate's.</p>
+  <p><a href="./">Return to the explorer →</a></p>
+</main></body>
+</html>
