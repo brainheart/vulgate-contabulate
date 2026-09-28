@@ -5,6 +5,7 @@ import re
 import unicodedata
 from pathlib import Path
 
+from scripts import source as source_module
 from scripts.source import SENTENCE_RE, load_books, verify_source_files  # noqa: F401
 
 TOKEN_RE = re.compile(r"[^\W\d_]+(?:[̀-ͯ]+[^\W\d_]*)*", re.UNICODE)
@@ -97,6 +98,8 @@ def build(source_path: Path, out_dir: Path):
             verse_label = verse.get("verse_label") or str(verse_num)
             chapter_label = verse.get("chapter_label")
             location = format_location(book_id, book_abbr, chapter_num, verse_label)
+            if verse.get("location_verse"):  # loader-supplied document-order key
+                location = f"{format_location(book_id, book_abbr, chapter_num)}.{verse['location_verse']}"
             total_words = len(toks)
             book_total_words += total_words
             book_tokens.extend(toks)
@@ -228,6 +231,9 @@ def build(source_path: Path, out_dir: Path):
         "play_removals": {},
     })
     write_json(lines_dir / "all_lines.json", all_lines)
+    if hasattr(source_module, "REPAIRS"):  # documented OCR numbering repairs
+        write_json(data_dir / "source_repairs.json",
+                   [{"ref": ref, "printed": old, "used": new} for ref, old, new in source_module.REPAIRS])
 
     return {
         "book_count": len(plays),
