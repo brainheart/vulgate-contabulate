@@ -1,0 +1,13 @@
+{
+  "edition": "Clementine Vulgate (Biblia Sacra juxta Vulgatam Clementinam, 1592), Tweedale / Clementine Vulgate Project text (VulSearch), 73 books",
+  "license": "Public domain",
+  "upstream": "https://github.com/seven1m/open-bibles",
+  "commit": "e310b178189e30443c44f2338022aab73546b274",
+  "copied_from": "~/Projects/polyglot-contabulate/sources/raw/vulgate (pinned in its sources/manifest.json)",
+  "files": {
+    "lat-clementine.usfx.xml": {
+      "url": "https://raw.githubusercontent.com/seven1m/open-bibles/e310b178189e30443c44f2338022aab73546b274/lat-clementine.usfx.xml",
+      "sha256": "5da5f3c07fa6896d4a2b45f5f309c3ece43e554fd059b31b8ae3688bbd182baf"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "vulgate",
+  "emoji": "🦁",
+  "title": "Latin Vulgate",
+  "tagline": "Latin Vulgate Tabular Explorer",
+  "language": "Latin",
+  "created": "2026-09-28",
+  "url": "https://vulgate.contabulate.org/",
+  "source": "https://github.com/brainheart/vulgate-contabulate",
+  "text_label": "books",
+  "segment_label": "verses",
+  "sample_queries": [
+    {
+      "label": "Where does the Vulgate say “caritas”, and where “dilectio”?",
+      "url": "https://vulgate.contabulate.org/?cs=1&zr=0&hl=1&q=%5Ecaritat%7C%5Ecaritas%24&nm=1&gran=play&mm=regex&ts=%255B%257B%2522t%2522%253A%2522%255Ecaritat%257C%255Ecaritas%2524%2522%252C%2522m%2522%253A%2522regex%2522%252C%2522n%2522%253A1%252C%2522d%2522%253A%2522count%2522%257D%252C%257B%2522t%2522%253A%2522%255Edilection%257C%255Edilectio%2524%2522%252C%2522m%2522%253A%2522regex%2522%252C%2522n%2522%253A1%252C%2522d%2522%253A%2522count%2522%257D%255D&qt=%255B%2522%255Edilection%257C%255Edilectio%2524%2522%255D&sk=t0_count&sd=desc&co=location%2Ctitle%2Cgenre%2Cnum_chapters%2Cverse_count%2Cngram_count%2Ct0_count%2Ct1_count"
+    },
+    {
+      "label": "Which psalm is “Dominus regit me” in the Vulgate’s own numbering?",
+      "url": "https://vulgate.contabulate.org/?cs=1&zr=0&hl=1&q=Dominus+regit+me&nm=1&gran=verse&mm=exact&ts=%255B%257B%2522t%2522%253A%2522Dominus%2520regit%2520me%2522%252C%2522m%2522%253A%2522exact%2522%252C%2522n%2522%253A3%252C%2522d%2522%253A%2522count%2522%257D%255D&sk=t0_count&sd=desc&co=location%2Cplay_title%2Cact%2Cscene%2Cline%2Ct0_count"
+    },
+    {
+      "label": "Which psalms cry “Miserere mei, Deus”?",
+      "url": "https://vulgate.contabulate.org/?cs=1&zr=0&hl=1&q=miserere+mei+Deus&nm=1&gran=verse&mm=exact&ts=%255B%257B%2522t%2522%253A%2522miserere%2520mei%2520Deus%2522%252C%2522m%2522%253A%2522exact%2522%252C%2522n%2522%253A3%252C%2522d%2522%253A%2522count%2522%257D%255D&sk=t0_count&sd=desc&co=location%2Cplay_title%2Cact%2Cscene%2Cline%2Ct0_count"
+    }
+  ]
+}

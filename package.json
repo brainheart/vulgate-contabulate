@@ -1,0 +1,27 @@
+{
+  "name": "vulgate-contabulate",
+  "version": "1.0.0",
+  "description": "Clementine Vulgate tabular explorer",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "python3 build.py",
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainheart/vulgate-contabulate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brainheart/vulgate-contabulate/issues"
+  },
+  "homepage": "https://github.com/brainheart/vulgate-contabulate#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}
