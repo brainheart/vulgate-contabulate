@@ -24,3 +24,11 @@ build output; edit `scripts/source.py`, `build.py`, or `instance-meta.json` and 
 ## License
 
 Code: MIT (see `LICENSE`). Latin text: public domain.
+
+## English lookup and glosses
+
+For readers without Latin, a lookup box above the term field finds Latin words by English meaning and inserts them as search terms; the word views add English and Dictionary form columns.
+
+- The data is English Wiktionary (CC BY-SA 3.0 / GFDL) as published by kaikki.org. `source_text/lexicon/wiktionary-extract.json` is the part of that 1.25 GB dictionary this text needs, cut by `kaikki_extract.py` in the contabulate-instances skill and pinned by SHA-256 in `scripts/glossary.py`.
+- `scripts/glossary.py` writes `docs/data/glossary.json` during `python3 build.py`. A dictionary cannot disambiguate a spelling in context, so each written form is filed under its likeliest dictionary word and shared spellings are counted (`amb`).
+- It is display-only: nothing in it is searched or counted, and the page works without it. `docs/js/glossary.js` is shared verbatim with the other non-English Contabulate instances.

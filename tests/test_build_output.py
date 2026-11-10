@@ -153,5 +153,80 @@ class CorpusTests(unittest.TestCase):
         self.assertEqual(read('docs/data/commentary_interest.json')['metadata']['commentators'], [])
 
 
+class GlossaryTests(unittest.TestCase):
+    """The English reading aids: dictionary forms and glosses from Wiktionary."""
+
+    @classmethod
+    def setUpClass(cls):
+        from scripts import glossary
+        cls.module = glossary
+        cls.source = ROOT / "source_text"
+        cls.glossary = read('docs/data/glossary.json')
+        cls.tokens = read('docs/data/tokens.json')
+        cls.lemmas = cls.glossary["lemmas"]
+        cls.forms = cls.glossary["forms"]
+        cls.by_lemma = {(e["lemma"], e["pos"]): e for e in reversed(cls.lemmas)}
+
+    def form_lemmas(self, form):
+        return [self.lemmas[i]["lemma"] for i in self.forms[form][2]]
+
+    def test_extract_is_pinned_and_attributed(self):
+        extract = self.module.load_extract(self.source / "lexicon" / self.module.EXTRACT_FILE)
+        self.assertEqual(extract["source"]["language"], "la")
+        self.assertIn("kaikki.org", extract["source"]["url"])
+        self.assertIn("Wiktionary", self.glossary["source"])
+        self.assertEqual(self.glossary["meta"], {"lang": "la", "dir": "ltr"})
+
+    def test_forms_cover_the_vocabulary_exactly(self):
+        self.assertEqual(set(self.forms), set(self.tokens))
+        total = 0
+        without = 0
+        for form, (count, glosses, related) in self.forms.items():
+            self.assertEqual(count, sum(c for _, c in self.tokens[form]), form)
+            self.assertTrue(all(0 <= i < len(self.lemmas) for i in related))
+            total += count
+            without += 0 if related else count
+        # Proper names are most of what Wiktionary lacks.
+        self.assertLess(without / total, 0.03)
+
+    def test_each_written_form_belongs_to_one_dictionary_word(self):
+        seen = {}
+        for entry in self.lemmas:
+            self.assertEqual(entry["n"], sum(count for _, count in entry["forms"]))
+            self.assertLessEqual(entry.get("amb", 0), entry["n"])
+            for form, count in entry["forms"]:
+                self.assertNotIn(form, seen)
+                seen[form] = entry["lemma"]
+                self.assertEqual(count, self.forms[form][0])
+        self.assertEqual([e["n"] for e in self.lemmas], sorted((e["n"] for e in self.lemmas), reverse=True))
+
+    def test_spellings_shared_by_several_words_go_to_the_likeliest(self):
+        # "est" is far more often "is" than "eats"; "qui" is the pronoun, not
+        # a form of "queo"; "at" is the conjunction, not a spelling of "ad".
+        self.assertEqual(self.form_lemmas("est")[0], "sum")
+        self.assertEqual(self.form_lemmas("qui")[0], "qui")
+        self.assertEqual(self.form_lemmas("at")[0], "at")
+        self.assertEqual(self.form_lemmas("arma")[0], "arma")
+        self.assertEqual(self.form_lemmas("regis")[0], "rex")
+        self.assertGreater(self.by_lemma[("sum", "verb")]["amb"], 0)
+
+    def test_lookup_spelling_and_enclitics(self):
+        self.assertEqual(self.module.normalize("Ejus"), "eius")
+        self.assertEqual(self.module.normalize("cælum"), "caelum")
+        self.assertEqual(self.module.normalize("amāvit"), "amavit")
+        self.assertEqual(self.module.candidates("dixitque"), ["dixitque", "dixit"])
+        self.assertEqual(self.form_lemmas("dixitque")[0], "dico")
+        self.assertEqual(self.module.short_definition(["war"]), "war")
+        self.assertTrue(self.module.short_definition(["x" * 60 + " " + "y" * 80]).endswith(" …"))
+
+    def test_glosses_and_search_weights(self):
+        entry = self.by_lemma[("rex", "noun")]
+        self.assertEqual((entry["n"], len(entry["forms"])), (3116, 12))
+        self.assertIn("king", dict(entry["w"]))
+        # A first-sense word outranks any later-sense match.
+        self.assertEqual(dict(entry["w"])["king"], entry["n"] * self.module.FIRST_SENSE)
+        self.assertTrue(entry["def"])
+
+
 if __name__ == '__main__':
     unittest.main()
